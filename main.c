@@ -103,6 +103,8 @@ int check_dir(){
             return -1;
         }
     }
+
+    closedir(dir);
 }
 
 void create(){
