@@ -15,6 +15,7 @@ void save(int cash);
 int load_cash();
 void help();
 int beg();
+int hack();
 int balance(int balance);
 void lower_string();
 
@@ -61,6 +62,7 @@ int main(){
             save(player->cash);
         }
         else if (strcmp(input, "beg") == 0){
+            usleep(4000000);
             track = beg();
             player->cash += track;
             printf("you earned %d from begging!\n", track);
@@ -74,6 +76,23 @@ int main(){
             printf("Cash balance %d\n", track);
 
             save(player->cash);
+        }
+        else if (strcmp(input, "hack") == 0){
+            usleep(8000000);
+            
+            track = hack();
+
+            if (track == 100){
+                player->cash -= 100;
+                puts("You have lost 100 money, due to the fail of the hack.");
+            }
+            else{
+                player->cash += track;
+            }
+            
+
+            save(player->cash);
+
         }
         else if (strcmp(input, "exit") == 0){
             save(player->cash);
@@ -180,6 +199,7 @@ void help(){
     puts("---------------------------");
 
     puts("Command: \"beg\" to earn money");
+    puts("Command: \"hack\" to earn money but with the risk of losing money.");
     puts("Command: \"balance/bal\" to check your balance");
 
     puts("---------------------------");
@@ -187,6 +207,42 @@ void help(){
 
 int beg(){
     return (rand() % 30) + 1;
+}
+
+int hack(){
+    int random = rand() % 51; 
+    random += 50;
+
+    char* arrm[] = {"You have hacked a random stranger successfully!",
+                   "You have hacked the FBI, and stole a good portion of their money!"};
+    char* arrc[] = {"You have been caught by the FBI and have been forced to pay 100 in cash.",
+                    "You have been caught by the NSA and have been forced to pay 100 in cash."};
+
+    for (int i = 2; i * i <= random; i++) {
+        if (random % i == 0) {
+            srand(time(NULL));
+
+            int rand_int = rand() % 2;
+
+            if (rand_int == 0){
+                printf("%s\n", arrm[0]);
+                return random;
+            }
+            else{
+                printf("%s\n", arrm[1]);
+                return random;
+            }
+        }
+
+    }
+
+    srand(time(NULL));
+    int rand_int = rand() % 2;
+
+    printf("%s\n", arrc[rand_int]);
+
+    return 100;
+    
 }
 
 int balance(int balance){
