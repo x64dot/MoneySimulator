@@ -34,6 +34,7 @@ int main(){
     
     if(check_dir() == -1){
         create();
+        player->cash = 0;
     }
     else{
         player->cash = load_cash();
@@ -79,7 +80,7 @@ int main(){
         }
         else if (strcmp(input, "hack") == 0){
             usleep(8000000);
-            
+
             track = hack();
 
             if (track == 100){
@@ -124,28 +125,30 @@ int check_dir(){
     }
 
     closedir(dir);
+
+    return 0;
 }
 
-void create(){
-    FILE* fptr;
-    FILE* fptr2;
+void create() {
+    FILE *fptr;
+    FILE *fptr2;
+
     mkdir("/.SimData", S_IRWXU | S_IRWXG | S_IRWXO);
 
-    if ((fptr = fopen("/.SimData/data.txt", "r")) == NULL){
-        
+    if ((fptr = fopen("/.SimData/data.txt", "r")) == NULL) {
         fptr2 = fopen("/.SimData/data.txt", "w");
-
-        fclose(fptr);
-        fclose(fptr2);
-
+        if (fptr2 != NULL) { 
+            fclose(fptr2);
+        }
         return;
     }
 
-    fclose(fptr);
-    fclose(fptr2);
-
+    if (fptr != NULL) { 
+        fclose(fptr);
+    }
     return;
 }
+
 
 void save(int cash){
     FILE* fptr;
