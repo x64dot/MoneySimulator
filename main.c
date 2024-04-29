@@ -24,9 +24,10 @@ int hack(int rebirths);
 int balance(int balance);
 void lower_string();
 void rebirth(struct PlayerData* player);
+void rebirth_count(int rebirths);
 
 int main(){
-    char input[10];
+    char input[20];
     struct PlayerData* player = (struct PlayerData*)malloc(sizeof(struct PlayerData));
 
     if (player == NULL){
@@ -48,7 +49,7 @@ int main(){
 
         printf("Input command: ");
 
-        if (fgets(input, 8, stdin) == NULL){
+        if (fgets(input, 18, stdin) == NULL){
             free(player);
             printf("Error: Input too long.");
 
@@ -58,7 +59,7 @@ int main(){
         input[strcspn(input, "\n")] = '\0';
 
         lower_string(input);
-
+        
         if (strcmp(input, "help") == 0){
             help();
             save(player->cash, player->rebirths);
@@ -72,7 +73,7 @@ int main(){
         }
         else if (strcmp(input, "balance") == 0 || strcmp(input, "bal") == 0){
             track = balance(player->cash);
-            printf("Cash balance %d\n", track);
+            printf("Cash balance: %d\n", track);
             save(player->cash, player->rebirths);
         }
         else if (strcmp(input, "hack") == 0){
@@ -94,6 +95,11 @@ int main(){
             save(player->cash, player->rebirths);
             free(player);
             return 0;
+        }
+        else if (strcmp(input, "rebirths") == 0){
+            save(player->cash, player->rebirths);
+            rebirth_count(player->rebirths);
+            
         }
         else {
             puts("Invalid command.");
@@ -188,10 +194,11 @@ int load_cash(int *rebirths){
 void help(){
     puts("---------------------------");
 
-    puts("Command: \"beg\" to earn money");
+    puts("Command: \"beg\" to earn money by begging.");
     puts("Command: \"hack\" to earn money but with the risk of losing money.");
-    puts("Command: \"balance/bal\" to check your balance");
+    puts("Command: \"balance/bal\" to check your balance.");
     puts("Command: \"rebirth\" to be reborned, and earn more.");
+    puts("Command: \"rebirths\" to check your rebirth count.");
 
     puts("---------------------------");
 }
@@ -249,24 +256,25 @@ void rebirth(struct PlayerData* player) {
     int base_cost = 500;
     int cost = base_cost * (player->rebirths + 1);
 
-    char input[4];
+    char input[10];
     while (1) {
         printf("Are you sure you want to rebirth? This will cost %d cash. (yes/no): ", cost);
 
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF) {}
 
-        if (fgets(input, sizeof(input), stdin) == NULL) {
+        if (fgets(input, 8, stdin) == NULL) {
             printf("Error: Input too long.\n");
             return;
         }
+        
 
         input[strcspn(input, "\n")] = '\0';
+
+      
         lower_string(input);
 
         if (strcmp(input, "yes") == 0) {
             if (player->cash >= cost) {
-                player->cash -= cost;
+                player->cash = 0;
                 player->rebirths++;
                 printf("Congratulations! You have been reborn. Your rebirth count is now %d.\n", player->rebirths);
             } else {
@@ -280,4 +288,8 @@ void rebirth(struct PlayerData* player) {
             printf("Invalid input. Please enter \"yes\" or \"no\".\n");
         }
     }
+}
+
+void rebirth_count(int rebirths){
+    printf("Rebirth count: %d\n", rebirths);
 }
