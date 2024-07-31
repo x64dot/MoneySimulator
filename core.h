@@ -10,6 +10,7 @@ struct PlayerData{
 class Functionality{
   public:
     void clear();
+    void shop(PlayerData* player);
 };
 
 class MoneyOp{
