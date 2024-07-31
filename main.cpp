@@ -36,7 +36,10 @@ int main(){
     }
     else if (input == "clear"){
        FuncObj.clear();     
-    }      
+    }
+    else if (input == "shop"){
+       FuncObj.shop(player);
+    }    
     else{
        cout << "Invalid Input: " << input << "\n";
     }
@@ -45,3 +48,4 @@ int main(){
 
   return 0;
 }
+
