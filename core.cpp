@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <cctype>
+#include <ios>
+#include <limits>
 
 using namespace std;
 
@@ -54,13 +56,13 @@ void Functionality::shop(PlayerData* player){
   char input;
 
   cin >> input;
-
+  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   input = tolower(input);
 
   if (input == 'n'){
        return;
    }
-
+   
    if (input == 'y'){
        if (player->money < cost){
             cout << "Sorry you do not have enough!\n";
