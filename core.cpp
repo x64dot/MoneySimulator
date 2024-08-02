@@ -50,7 +50,6 @@ void Functionality::shop(PlayerData* player){
   else{
        cost = realcost * amount * player->boost;
   }
-  cost = realcost * amount;
   cout << "The cost for " << amount << " boosts will be " << cost << " cash\n";
   cout << "Would you like to purchase?(y/n)\n";
   char input;
@@ -70,7 +69,9 @@ void Functionality::shop(PlayerData* player){
        }
        else{
            cout << "You have bought " << amount << " boosts!\n";
-           player->boost += amount;  
+           player->boost += amount; 
+           player->money -= cost; 
           }
       }
    }
+
