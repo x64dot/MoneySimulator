@@ -11,6 +11,7 @@ class Functionality{
   public:
     void clear();
     void shop(PlayerData* player);
+    bool chance();
 };
 
 class MoneyOp{
