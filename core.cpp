@@ -25,7 +25,7 @@ void MoneyOp::getbal(PlayerData* player){
 void MoneyOp::beg(PlayerData* player){
   srand((unsigned) time(NULL));
   Functionality Obj;
-  if (player->boost == 0 || player->super_boost == 0){
+  if (player->boost == 0 && player->super_boost == 0){
        int random = 5 + (rand() % 100);
        player->money += random;
        cout << "You earned " << random << " from begging" << "\n";
@@ -36,8 +36,33 @@ void MoneyOp::beg(PlayerData* player){
 
           cout << "You earned " << gems_random << " gems!\n";
        }
+  }
+  else if (player->boost > 0 && player->super_boost == 0){
+     int random = 5 + (rand() % (100 * player->boost));
+     player->money += random;
+     cout << "You earned " << random << " from begging" << "\n";
+
+     if (Obj.chance() == true){
+         int gems_random = 1 + (rand() % 5);
+         player->gems += gems_random;
+
+         cout << "You earned " << gems_random << " gems!\n";
+     }
 
   }
+  else if (player->boost == 0 && player->super_boost > 0){
+     int random = 5 + (rand() % (100 * player->super_boost * 20));
+     player->money += random;
+     cout << "You earned " << random << " from begging" << "\n";
+    
+     if (Obj.chance() == true){           
+         int gems_random = 1 + (rand() % 5);
+         player->gems += gems_random;
+           
+         cout << "You earned " << gems_random << " gems!\n";
+       }
+  }
+
   else{
      int random = 5 + (rand() % (100 * player->boost * (player->super_boost * 20)));
      player->money += random;
@@ -138,4 +163,4 @@ void Functionality::shop2(PlayerData* player){
            player->gems -= cost; 
           }
       }
-   } 
+   }
