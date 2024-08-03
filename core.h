@@ -4,7 +4,8 @@
 struct PlayerData{ 
   int money;
   int gems;
-  int boost; 
+  int boost;
+  int super_boost; 
 };
 
 class Functionality{
@@ -12,6 +13,7 @@ class Functionality{
     void clear();
     void shop(PlayerData* player);
     bool chance();
+    void shop2(PlayerData* player);
 };
 
 class MoneyOp{
@@ -21,3 +23,4 @@ class MoneyOp{
 };
 
 #endif
+
