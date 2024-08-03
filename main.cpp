@@ -15,8 +15,9 @@ int main(){
   }
 
   player->money = 0;
-  player->gems = 0;
+  player->gems = 50;
   player->boost = 0;
+  player->super_boost = 0;
 
   while (1){
     string input;
@@ -39,7 +40,10 @@ int main(){
     }
     else if (input == "shop"){
        FuncObj.shop(player);
-    }    
+    }   
+    else if (input == "shop2"){
+       FuncObj.shop2(player);
+    } 
     else{
        cout << "Invalid Input: " << input << "\n";
     }
@@ -48,4 +52,5 @@ int main(){
 
   return 0;
 }
+
 
