@@ -15,7 +15,7 @@ int main(){
   }
 
   player->money = 0;
-  player->gems = 50;
+  player->gems = 0;
   player->boost = 0;
   player->super_boost = 0;
 
