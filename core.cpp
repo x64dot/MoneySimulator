@@ -5,14 +5,44 @@
 #include <ios>
 #include <limits>
 
+
 using namespace std;
 
 bool Functionality::chance(){
-  srand((unsigned) time(NULL));
   bool TrueFalse = (rand() % 100) < 15;
 
   return TrueFalse;
 }
+
+void Functionality::help_menu() {
+    cout << "------------------------------------------------------\n";
+    cout << "                   Game Help Menu                    \n";
+    cout << "------------------------------------------------------\n";
+    cout << "1. **Displaying Your Balance**\n";
+    cout << "   - Use \"bal\" to display your current money, gems, boosts, and super boosts.\n";
+    cout << "\n";
+    cout << "2. **Begging for Money**\n";
+    cout << "   - Use \"beg\" to beg for money. Depending on your boosts and super boosts, you can earn more money and gems.\n";
+    cout << "   - If you have boosts or super boosts, you will earn more money based on their levels.\n";
+    cout << "\n";
+    cout << "3. **Purchasing Boosts**\n";
+    cout << "   - Use \"shop\" to buy boosts. Each boost costs cash, and the cost increases with the number of boosts you already have.\n";
+    cout << "   - You can buy multiple boosts at once.\n";
+    cout << "\n";
+    cout << "4. **Purchasing Super Boosts**\n";
+    cout << "   - Use \"shop2\" to buy super boosts. Each super boost costs gems, and the cost increases with the number of super boosts you already have.\n";
+    cout << "   - You can buy multiple super boosts at once.\n";
+    cout << "\n";
+    cout << "5. **Clearing the Screen**\n";
+    cout << "   - Use \"clear\" to clear the terminal screen for better readability.\n";
+    cout << "\n";
+    cout << "6. **Help Menu**\n";
+    cout << "   - Use \"help\" to display this help menu.\n";
+    cout << "------------------------------------------------------\n";
+    cout << "                Good luck and have fun!              \n";
+    cout << "------------------------------------------------------\n";
+}
+
 
 
 void MoneyOp::getbal(PlayerData* player){
@@ -23,14 +53,13 @@ void MoneyOp::getbal(PlayerData* player){
 }
 
 void MoneyOp::beg(PlayerData* player){
-  srand((unsigned) time(NULL));
   Functionality Obj;
   if (player->boost == 0 && player->super_boost == 0){
        int random = 5 + (rand() % 100);
        player->money += random;
        cout << "You earned " << random << " from begging" << "\n";
        
-       if (Obj.chance() == true){
+       if (Obj.chance()){
           int gems_random = 1 + (rand() % 5);
           player->gems += gems_random;
 
@@ -42,7 +71,7 @@ void MoneyOp::beg(PlayerData* player){
      player->money += random;
      cout << "You earned " << random << " from begging" << "\n";
 
-     if (Obj.chance() == true){
+     if (Obj.chance()){
          int gems_random = 1 + (rand() % 5);
          player->gems += gems_random;
 
@@ -51,11 +80,11 @@ void MoneyOp::beg(PlayerData* player){
 
   }
   else if (player->boost == 0 && player->super_boost > 0){
-     int random = 5 + (rand() % (100 * player->super_boost * 20));
+     int random = 5 + (rand() % (100 * player->super_boost * SUPER_BOOST));
      player->money += random;
      cout << "You earned " << random << " from begging" << "\n";
     
-     if (Obj.chance() == true){           
+     if (Obj.chance()){           
          int gems_random = 1 + (rand() % 5);
          player->gems += gems_random;
            
@@ -64,11 +93,11 @@ void MoneyOp::beg(PlayerData* player){
   }
 
   else{
-     int random = 5 + (rand() % (100 * player->boost * (player->super_boost * 20)));
+     int random = 5 + (rand() % (100 * player->boost * (player->super_boost * SUPER_BOOST)));
      player->money += random;
      cout << "You earned " << random << " from begging" << "\n";
      
-     if (Obj.chance() == true){
+     if (Obj.chance()){
         int gems_random = 1 + (rand() % 5);
         player->gems += gems_random;
 
@@ -85,12 +114,17 @@ void Functionality::clear(){
 
 
 void Functionality::shop(PlayerData* player){
-  int amount = 0, cost = 0, realcost = 500;
+  long int amount = 0, cost = 0, realcost = 500;
   cout << "------------------------------------------------------\n";
   cout << "How many boost would you like to buy?(Enter a number)\n";
   cout << "-----------------------------------------------------\n";
   cin >> amount;
-
+  if (cin.fail() || amount < 0){
+      cin.clear();
+      cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      cout << "Error with input: Enter a postive number only. Visit the shop again.\n";
+      return;
+  }
   if (amount == 0){
       return;
   }
@@ -125,12 +159,18 @@ void Functionality::shop(PlayerData* player){
       }
    }
 void Functionality::shop2(PlayerData* player){
-  int amount = 0, cost = 0, realcost = 40;
+  long int amount = 0, cost = 0, realcost = 40;
   cout << "------------------------------------------------------\n";
   cout << "How many super boost would you like to buy?(Enter a number)\n";
   cout << "-----------------------------------------------------\n";
   cin >> amount;
-
+  
+   if (cin.fail() || amount < 0){
+       cin.clear();
+       cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+       cout << "Error with input: Enter a postive number only. Visit the shop22 again.\n";
+       return;
+    }
   if (amount == 0){
       return;
   }
