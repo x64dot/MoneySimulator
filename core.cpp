@@ -168,7 +168,7 @@ void Functionality::shop2(PlayerData* player){
    if (cin.fail() || amount < 0){
        cin.clear();
        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-       cout << "Error with input: Enter a postive number only. Visit the shop22 again.\n";
+       cout << "Error with input: Enter a postive number only. Visit the shop2 again.\n";
        return;
     }
   if (amount == 0){
