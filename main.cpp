@@ -5,7 +5,8 @@
 using namespace std;
 
 int main(){
-  
+  srand((unsigned) time(NULL));
+
   MoneyOp MoneyObj;
   Functionality FuncObj;
 
@@ -43,7 +44,10 @@ int main(){
     }   
     else if (input == "shop2"){
        FuncObj.shop2(player);
-    } 
+    }
+    else if (input == "help"){
+         FuncObj.help_menu();
+    }
     else{
        cout << "Invalid Input: " << input << "\n";
     }
@@ -52,5 +56,3 @@ int main(){
 
   return 0;
 }
-
-
