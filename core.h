@@ -1,15 +1,17 @@
 #ifndef CORE_H
 #define CORE_H
 
+#define SUPER_BOOST 5
 struct PlayerData{ 
-  int money;
-  int gems;
-  int boost;
-  int super_boost; 
+ long long int money;
+ long int gems;
+ long int boost;
+ long int super_boost; 
 };
 
 class Functionality{
   public:
+    void help_menu();
     void clear();
     void shop(PlayerData* player);
     bool chance();
@@ -23,4 +25,3 @@ class MoneyOp{
 };
 
 #endif
-
